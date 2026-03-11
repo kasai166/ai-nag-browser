@@ -1,10 +1,9 @@
-// background.js
 // content.js からメッセージを受け取り、ローカルの Ollama API を叩いて結果を返す。
 // (CORS 回避のため、fetch は background で行う設計)
 
 chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
   if (!req || req.type !== "AI_REQUEST") {
-    return; // 無関係なメッセージは無視
+    return; 
   }
 
   (async () => {
@@ -35,7 +34,7 @@ chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
         return;
       }
 
-      // data.response を返す（Ollama のレスポンス形式に合わせている）
+      // data.response を返す
       sendResponse({ ok: true, text: data.response || (data?.response_text || "No response") });
 
     } catch (err) {
@@ -45,6 +44,6 @@ chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
     }
   })();
 
-  // 非同期で sendResponse を使うので true を返す
+ 
   return true;
 });
